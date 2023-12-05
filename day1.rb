@@ -8,7 +8,6 @@ end
 # get first digit in string
 def first_digit(string)
     string.each_char do |c|
-        #check if c is a digit
         if is_digit?(c)
             return c
         end
@@ -19,7 +18,6 @@ end
 # get last digit in string
 def last_digit(string)
     string.reverse.each_char do |c|
-        #check if c is a digit
         if is_digit?(c)
             return c
         end
