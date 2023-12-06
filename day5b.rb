@@ -26,7 +26,7 @@ def max(a,b)
 end
 
 def walk_map(source,source_number_start,source_number_range)
-    puts "walk_map source #{source} source_number_start #{source_number_start} source_number_range #{source_number_range}"
+    #puts "walk_map source #{source} source_number_start #{source_number_start} source_number_range #{source_number_range}"
     ranges = []
     $maps[source].each do |mapping|
         if source_number_start + source_number_range - 1 < mapping[1] then
@@ -41,14 +41,14 @@ def walk_map(source,source_number_start,source_number_range)
         destination_range_start = mapping[0] + (source_range_start - mapping[1])
         #destination_range_stop = min(mapping[0] + source_number_start + source_number_range  - 1, mapping[0] + mapping[2] - 1)
         destination_range_stop = min(mapping[0] + source_range_stop - mapping[1]  , mapping[0] + mapping[2] - 1)
-        puts "mapping #{mapping.to_s}"
-        puts "mapping source #{source} source_range_start #{source_range_start} source_range_stop #{source_range_stop} destination_range_start #{destination_range_start} destination_range_stop #{destination_range_stop}"
+        #puts "mapping #{mapping.to_s}"
+        #puts "mapping source #{source} source_range_start #{source_range_start} source_range_stop #{source_range_stop} destination_range_start #{destination_range_start} destination_range_stop #{destination_range_stop}"
         ranges.push([source_range_start, source_range_stop,destination_range_start, destination_range_stop])
     end
     #sort ranges on source_range_start
     ranges.sort! { |a,b| a[0] <=> b[0] }
 
-    puts "og ranges: #{ranges.to_s}"
+    #puts "og ranges: #{ranges.to_s}"
     if ranges.length == 0 then
         ranges.push([source_number_start, source_number_start + source_number_range - 1, source_number_start, source_number_start + source_number_range - 1])
     else
@@ -59,7 +59,7 @@ def walk_map(source,source_number_start,source_number_range)
             range_start = ranges[i][1] + 1
             range_stop = ranges[i+1][0] - 1
             if range_start <= range_stop then
-                puts "debug fill range_start #{range_start} range_stop #{range_stop}"
+                #puts "debug fill range_start #{range_start} range_stop #{range_stop}"
                 ranges.push([range_start, range_stop, range_start, range_stop])
             end
             i += 1
@@ -67,24 +67,24 @@ def walk_map(source,source_number_start,source_number_range)
         # eerste range en laatste range opvullen
         if ranges[0][0] > source_number_start then
             ranges.push([source_number_start, ranges[0][0] - 1, source_number_start, ranges[0][0] - 1])
-            puts "debug fill first #{ranges.last.to_s}"
+            #puts "debug fill first #{ranges.last.to_s}"
         end
         if ranges[nb_og_ranges-1][1] < source_number_start + source_number_range - 1 then
             ranges.push([ranges[nb_og_ranges-1][1] + 1, source_number_start + source_number_range - 1, ranges[nb_og_ranges-1][1] + 1, source_number_start + source_number_range - 1])
-            puts "debug fill end #{ranges.last.to_s}"
+            #puts "debug fill end #{ranges.last.to_s}"
         end
     end
 
-    puts "source #{source} start #{source_number_start} source stop #{source_number_start + source_number_range - 1}   ranges: #{ranges.to_s}" 
+    #puts "source #{source} start #{source_number_start} source stop #{source_number_start + source_number_range - 1}   ranges: #{ranges.to_s}" 
 
     ranges_range = ranges.inject(0) { |sum, range| sum + range[3] - range[2] + 1 }
     if ranges_range != source_number_range then
-        puts " !!! ranges_range: #{ranges_range} source_number_range: #{source_number_range}"
+        #puts " !!! ranges_range: #{ranges_range} source_number_range: #{source_number_range}"
     end
 
     min = -1
     if $map_mapper_map[source] == "location"
-        puts "leaf #{ranges.to_s}"
+        #puts "leaf #{ranges.to_s}"
         min = ranges[0][2]
         ranges.each do |range|
             if range[3] < min then
@@ -125,8 +125,8 @@ while line = gets
     end
 end
 
-puts $map_mapper_map.to_s
-puts $maps.to_s
+#puts $map_mapper_map.to_s
+#puts $maps.to_s
 
 min = -1
 $i = 0
