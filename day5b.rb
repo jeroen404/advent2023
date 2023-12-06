@@ -77,7 +77,7 @@ def walk_map(source,source_number_start,source_number_range)
 
     #puts "source #{source} start #{source_number_start} source stop #{source_number_start + source_number_range - 1}   ranges: #{ranges.to_s}" 
 
-    ranges_range = ranges.inject(0) { |sum, range| sum + range[3] - range[2] + 1 }
+    #ranges_range = ranges.inject(0) { |sum, range| sum + range[3] - range[2] + 1 }
     #if ranges_range != source_number_range then
         #puts " !!! ranges_range: #{ranges_range} source_number_range: #{source_number_range}"
     #end
