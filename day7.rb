@@ -32,17 +32,17 @@ class Hand
         score = 1
         suits.each do |k,v|
             if v > 3
-                score = v + 2
+                score = v + 2  # 5=7 4=6 
                 break
-            elsif (v == 3 and score == 2) or (v == 2 and score == 3)
-                score = 5
+            elsif (v == 3 and score == 2) or (v == 2 and score == 4)
+                score = 5  # full house
                 break
             elsif v == 3
-                score = 4
+                score = 4 # 3 of a kind
             elsif (v == 2) and (score == 2)
-                score = 3
+                score = 3 # 2 pair
             elsif v == 2
-                score = 2
+                score = 2 # 1 pair
             end
         end
         return score
@@ -109,9 +109,13 @@ while line = gets do
     $hands << Hand.new(hand,bid)
 end
 
-puts $hands.sort.to_s
+def debug 
+    puts $hands.sort.to_s
 
-puts $hands.sort.map { |h| h.hand }.length
-puts $hands.sort.map { |h| h.hand }.uniq.length
+    puts $hands.sort.map { |h| h.hand }.length
+    puts $hands.sort.map { |h| h.hand }.uniq.length
+end
+
+#debug
 
 puts $hands.sort.map.with_index { |h,i| (i+1)*h.bid.to_i}.inject(:+)
