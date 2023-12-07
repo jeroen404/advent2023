@@ -109,6 +109,9 @@ while line = gets do
     $hands << Hand.new(hand,bid)
 end
 
+puts $hands.sort.to_s
 
+puts $hands.sort.map { |h| h.hand }.length
+puts $hands.sort.map { |h| h.hand }.uniq.length
 
 puts $hands.sort.map.with_index { |h,i| (i+1)*h.bid.to_i}.inject(:+)
