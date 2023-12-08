@@ -19,18 +19,18 @@ class Hand
         @bid
     end
 
-    def same_suits
-        suits = {}
+    def same_values
+        values = {}
         @hand.each_char do |c|
-            suits[c] = suits.key?(c) ? suits[c] + 1 : 1
+            values[c] = values.key?(c) ? values[c] + 1 : 1
         end
-        return suits
+        return values
     end
 
     def score1
-        suits = same_suits
+        values = same_values
         score = 1
-        suits.each do |k,v|
+        values.each do |k,v|
             if v > 3
                 score = v + 2  # 5=7 4=6 
                 break
