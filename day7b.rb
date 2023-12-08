@@ -19,33 +19,33 @@ class Hand
         @bid
     end
 
-    def same_values
-        values = {}
+    def same_card_values
+        card_values = {}
         @hand.each_char do |c|
-            values[c] = values.key?(c) ? values[c] + 1 : 1
+            card_values[c] = card_values.key?(c) ? card_values[c] + 1 : 1
         end
-        return values
+        return card_values
     end
 
     def score1
-        values = same_values
-        jokers = values.key?('J') ? values['J'] : 0
-        values.delete('J')
-        max_values = values.values.max || 0 # 5 jokers
-        tally = values.values.tally
+        card_values = same_card_values
+        jokers = card_values.key?('J') ? card_values['J'] : 0
+        card_values.delete('J')
+        max_card_values = card_values.values.max || 0 # 5 jokers
+        tally = card_values.values.tally
         score = 1
 
-        if max_values + jokers == 5
+        if max_card_values + jokers == 5
             score = 7 # 5 of a kind
-        elsif max_values + jokers == 4
+        elsif max_card_values + jokers == 4
             score = 6 # 4 of a kind
-        elsif max_values + jokers == 3
+        elsif max_card_values + jokers == 3
             if (tally[2] == 2) or (tally[3] == 1 && tally[2] == 1)
                 score = 5 # full house
             else
                 score = 4 # 3 of a kind
             end
-        elsif max_values + jokers == 2
+        elsif max_card_values + jokers == 2
             if tally[2] == 2
                 score = 3 # 2 pair
             else
@@ -106,7 +106,7 @@ class Hand
     end
 
     def inspect
-        return "(Hand: hand'" + @hand + "',bid:'" + @bid + "',score1:" + self.score1.to_s + ",values:" + self.same_values.to_s + ")"
+        return "(Hand: hand'" + @hand + "',bid:'" + @bid + "',score1:" + self.score1.to_s + ",card_values:" + self.same_card_values.to_s + ")"
     end
 
 end

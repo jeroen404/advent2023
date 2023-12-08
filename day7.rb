@@ -19,18 +19,18 @@ class Hand
         @bid
     end
 
-    def same_values
-        values = {}
+    def same_card_values
+        card_values = {}
         @hand.each_char do |c|
-            values[c] = values.key?(c) ? values[c] + 1 : 1
+            card_values[c] = card_values.key?(c) ? card_values[c] + 1 : 1
         end
-        return values
+        return card_values
     end
 
     def score1
-        values = same_values
+        card_values = same_card_values
         score = 1
-        values.each do |k,v|
+        card_values.each do |k,v|
             if v > 3
                 score = v + 2  # 5=7 4=6 
                 break
