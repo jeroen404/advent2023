@@ -27,14 +27,6 @@ class Node
     end
 end
 
-def finished?(current_nodes)
-    return (current_nodes.keys.select { |k| k =~ /Z$/ }.length == current_nodes.length)
-end
-
-def debug
-    puts "Instructions: #{$instructions.to_s}"
-    puts "Nodes: #{$nodes}"
-end
 
 $instructions = gets.chomp.each_char.to_a
 gets 
@@ -45,7 +37,6 @@ while line = gets
     $nodes[name] = Node.new(name , left, right)
 end
 
-#debug
 
 start_nodes = $nodes.select { |k,v| k =~ /A$/ }
 
