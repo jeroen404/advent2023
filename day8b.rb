@@ -44,18 +44,13 @@ steps_collection = []
 start_nodes.each do |node_name,node|
     steps = 0
     next_node = node_name
-    found = false
-    loop do
-        $instructions.each do |instruction|
+    $instructions.cycle do |instruction|
             if next_node =~ /Z$/ then
                 steps_collection << steps
-                found = true
                 break
             end
         next_node = (instruction == "L") ? $nodes[next_node].left : $nodes[next_node].right
         steps += 1
-        end
-        break if found
     end
 end
 
