@@ -34,23 +34,6 @@ end
 
 print_map $map if $debug
 
-
-$empty_rows = []
-$map.each_with_index do |row, row_index|
-    if not row.include? "#" then
-        $empty_rows << row_index
-    end
-end
-$empty_cols = []
-for i in 0..$map[0].length-1 do
-    if not ($map.detect { |row| row[i] == "#" }) then
-        $empty_cols << i
-    end
-end
-
-puts "empty_rows: #{$empty_rows}" if $debug
-puts "empty_cols: #{$empty_cols}" if $debug
-
 $galaxies= []
 $map.each_with_index do |row, row_index|
     row.each_with_index do |col, col_index|
@@ -59,5 +42,12 @@ $map.each_with_index do |row, row_index|
         end
     end
 end
+
+$empty_rows = (0..$map.length).to_a - $galaxies.map { |galaxy| galaxy.y } 
+$empty_cols = (0..$map[0].length).to_a - $galaxies.map { |galaxy| galaxy.x }
+
+puts "empty_rows: #{$empty_rows}" if $debug
+puts "empty_cols: #{$empty_cols}" if $debug
+
 
 puts $galaxies.combination(2).map { |g1,g2| distance(g1,g2) }.inject(:+)
