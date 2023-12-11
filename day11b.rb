@@ -17,7 +17,6 @@ def distance(galaxy1, galaxy2)
     expansion_y = empty_rows_between * $expansion_factor
     x_distance = (galaxy1.x - galaxy2.x).abs + expansion_x
     y_distance = (galaxy1.y - galaxy2.y).abs + expansion_y
-    puts "x_distance: #{x_distance} y_distance: #{y_distance} expansion_x: #{expansion_x} expansion_y #{expansion_y} empty_cols_between: #{empty_cols_between} empty_rows_between: #{empty_rows_between}" if $debug  
     return x_distance + y_distance 
 end
 
@@ -34,7 +33,6 @@ while line = gets do
 end
 
 print_map $map if $debug
-
 
 
 $empty_rows = []
@@ -61,12 +59,5 @@ $map.each_with_index do |row, row_index|
         end
     end
 end
-
-#puts distance($galaxies[4],$galaxies[8])
-#puts distance($galaxies[0],$galaxies[6])
-#puts distance($galaxies[2],$galaxies[5])
-#puts distance($galaxies[7],$galaxies[8])
-
-#$galaxies.combination(2).map { |g1,g2| distance(g1,g2) }.each { |d| puts d } 
 
 puts $galaxies.combination(2).map { |g1,g2| distance(g1,g2) }.inject(:+)
