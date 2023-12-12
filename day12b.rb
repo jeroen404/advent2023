@@ -31,40 +31,27 @@ def explode_line(line)
 end
 
 def cache_solve_line(record,seq)
-    if $cache.has_key?(record) then
-        if $cache[record].has_key?(seq) then
-            return $cache[record][seq]
-        end
-    end
-    cache_solution = solve_line(record,seq)
-    add_cache(record,seq,cache_solution)
-    return cache_solution
+    # a||=b means assign b to a only if a is unassigned or evaluates to false
+    return $cache[[record,seq]] ||=  solve_line(record,seq) 
 end
 
 def solve_line(record,seq)
     
     if record.length == 0 then
-        if seq.length == 0 then
-            return 1
-        else
-            return 0
-        end
+        return seq.length == 0 ? 1 : 0
     end
+
     if seq.length == 0 then
-        if record.detect { |x| x == '#' } then
-            return 0
-        else
-            return 1
-        end
+        return record.detect { |x| x == '#' } ? 0 : 1
     end
 
     if record[0] == '.' then
         return solve_line(record[1..-1],seq)
     elsif record[0] == '?' then
         point_record = (['.'] + record[1..-1])
-        point_solution = cache_solve_line(point_record,seq)
+        point_solution = solve_line(point_record,seq)
         hash_record = (['#'] + record[1..-1])
-        hash_solution = cache_solve_line(hash_record,seq)
+        hash_solution = solve_line(hash_record,seq)
         return  point_solution + hash_solution
     elsif record[0] == '#' then
         if record.length >= seq[0] and (not record[0..(seq[0]-1)].include?('.')) then
