@@ -6,22 +6,23 @@ class Line < Struct.new(:record,:seq)
     def solve 
         return solve_line(record,seq)
     end
+
+    def explode
+        new_record = []
+        5.times do
+            new_record += record + ['?']
+        end
+        new_record.pop
+        new_seq = []
+        5.times do
+            new_seq += seq 
+        end
+        return Line.new(new_record,new_seq)
+    end
 end
 
 $cache = {}
 
-def explode_line(line)
-    new_record = []
-    5.times do
-        new_record += line.record + ['?']
-    end
-    new_record.pop
-    new_seq = []
-    5.times do
-        new_seq += line.seq 
-    end
-    return Line.new(new_record,new_seq)
-end
 
 def cache_solve_line(record,seq)
     # a||=b means assign b to a only if a is unassigned or evaluates to false
@@ -31,11 +32,11 @@ end
 def solve_line(record,seq)
     
     if record.empty? then
-        return seq.length == 0 ? 1 : 0
+        return seq.empty? ? 1 : 0
     end
 
     if seq.empty? then
-        return record.detect { |x| x == '#' } ? 0 : 1
+        return record.include?('#') ? 0 : 1
     end
 
     if record[0] == '.' then
@@ -65,7 +66,7 @@ end
 lines = []
 while line = gets
     schema_line,broken_sequence = line.chomp.split(' ')
-    lines.push(explode_line(Line.new(schema_line.each_char.to_a, broken_sequence.split(',').map { |x| x.to_i })))
+    lines.push((Line.new(schema_line.each_char.to_a, broken_sequence.split(',').map { |x| x.to_i })).explode)
 end
 
 puts lines.map { |line| line.solve }.inject(:+)
