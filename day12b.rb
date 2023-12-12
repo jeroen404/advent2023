@@ -34,7 +34,7 @@ class Line < Struct.new(:record,:seq)
             return record.include?('#') ? 0 : 1
         end
 
-        if record.length < seq.inject(:+) then
+        if record.length < seq.inject(:+) + seq.size - 1 then
             return 0
         end
 
