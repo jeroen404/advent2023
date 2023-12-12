@@ -34,6 +34,10 @@ class Line < Struct.new(:record,:seq)
             return record.include?('#') ? 0 : 1
         end
 
+        if record.length < seq.inject(:+) then
+            return 0
+        end
+
         if record[0] == '.' then
             return Line.new(record[1..-1],seq).cache_solve_line()
         elsif record[0] == '?' then
@@ -43,7 +47,7 @@ class Line < Struct.new(:record,:seq)
             hash_solution = Line.new(hash_record,seq).solve_line()
             return  point_solution + hash_solution
         elsif record[0] == '#' then
-            if record.length >= seq[0] and (not record[0..(seq[0]-1)].include?('.')) then
+            if not record[0..(seq[0]-1)].include?('.') then
                 if record.length > seq[0]  then
                     if record[seq[0]] == '#' then # +1 -1
                         return 0
