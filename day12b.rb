@@ -10,13 +10,6 @@ end
 
 $cache = {}
 
-def add_cache(record,seq,solution)
-    if not $cache.has_key?(record) then
-        $cache[record] = {}
-    end
-    $cache[record][seq] = solution
-end
-
 def explode_line(line)
     new_record = []
     5.times do
@@ -67,17 +60,12 @@ def solve_line(record,seq)
             return 0
         end
     end
-
-
 end
 
 lines = []
-
 while line = gets
     schema_line,broken_sequence = line.chomp.split(' ')
     lines.push(explode_line(Line.new(schema_line.each_char.to_a, broken_sequence.split(',').map { |x| x.to_i })))
 end
 
-
 puts lines.map { |line| line.solve }.inject(:+)
-
