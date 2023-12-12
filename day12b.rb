@@ -46,7 +46,7 @@ def solve_line(record,seq)
     end
 
     if record[0] == '.' then
-        return solve_line(record[1..-1],seq)
+        return cache_solve_line(record[1..-1],seq)
     elsif record[0] == '?' then
         point_record = (['.'] + record[1..-1])
         point_solution = solve_line(point_record,seq)
