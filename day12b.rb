@@ -13,12 +13,12 @@ $cache = {}
 def explode_line(line)
     new_record = []
     5.times do
-        new_record = new_record + line.record + ['?']
+        new_record += line.record + ['?']
     end
     new_record.pop
     new_seq = []
     5.times do
-        new_seq = new_seq + line.seq 
+        new_seq += line.seq 
     end
     return Line.new(new_record,new_seq)
 end
@@ -30,11 +30,11 @@ end
 
 def solve_line(record,seq)
     
-    if record.length == 0 then
+    if record.empty? then
         return seq.length == 0 ? 1 : 0
     end
 
-    if seq.length == 0 then
+    if seq.empty? then
         return record.detect { |x| x == '#' } ? 0 : 1
     end
 
