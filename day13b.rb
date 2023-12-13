@@ -49,7 +49,7 @@ def print_schema(schema)
 end
 
 ## input
-STDIN.split("\n\n").each do |schema|
+STDIN.read.split("\n\n").each do |schema|
     $schemas.push(schema.split("\n").map {|s| s.split("") })
 end
 
