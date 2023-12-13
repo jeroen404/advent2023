@@ -49,16 +49,9 @@ def print_schema(schema)
 end
 
 ## input
-schema = []
-while line = gets
-    if line.length > 1 then
-        schema.push(line.chomp.each_char.to_a)
-    else
-        $schemas.push(schema)
-        schema = []
-    end
+STDIN.split("\n\n").each do |schema|
+    $schemas.push(schema.split("\n").map {|s| s.split("") })
 end
-$schemas.push(schema)
 
 # deel 1 & 2
 puts $schemas.map {|s| score(s,0) }.inject(:+)
