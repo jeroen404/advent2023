@@ -4,14 +4,13 @@ $schemas = []
 
 def find_mirror_y(schema,smudges)
     if schema.length <= 2 then
-        puts "schema too small"
-        return 0
+        raise "schema too small"
     end
     (schema.size-1).times do |y|
         faults = 0
         schema[0].size.times do |x|
             for yy in y+1..(schema.length-1) do
-                yyy = y - (yy - y) + 1
+                yyy = y - (yy - y) + 1 # 2*y - yy + 1 onder de vrienden
                 if yyy >= 0 then
                     if not (schema[yy][x] == schema[yyy][x]) then
                         faults += 1
@@ -39,10 +38,8 @@ end
 
 def score(schema,smudges)
     x_mirror = find_mirror_x(schema,smudges)
-    x_score =  x_mirror > -1 ? x_mirror + 1 : 0
     y_mirror = find_mirror_y(schema,smudges)
-    y_score =  y_mirror > -1 ? (y_mirror + 1)*100 : 0
-    return x_score + y_score
+    return x_mirror + (y_mirror + 1)*100
 end
 
 def print_schema(schema)
