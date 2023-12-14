@@ -55,7 +55,6 @@ end
 
 $platform = STDIN.read.split("\n").map {|s| s.split("") }
 
-
 cycles = 1000000000 
 i=0
 j=0
@@ -73,15 +72,12 @@ end
 
 more_cycles = (cycles - i)  % (i - j)
 puts "more cycles: #{more_cycles}"
-i=1
 more_cycles.times do
     $platform = tilt_north($platform)
     $platform = tilt_west($platform)
     $platform = tilt_south($platform)
     $platform = tilt_east($platform)
-    i += 1
 end
-
 
 score = $platform.map.with_index { |row,index| row.count("O") * ($platform.size - index) }.inject(:+)
 puts "score: #{score}"
