@@ -2,17 +2,17 @@
 
 $cache = {}
 
-def loop_detect(direction,plat)
-    if $cache[[direction,plat]] then
-        return true
+def loop_detect(plat,i)
+    if $cache[plat] then
+        return $cache[plat]
     end
-    $cache[[direction,plat]] = 1
-    return false
+    $cache[plat] = i
+    return -1
 end
 
-def tilt(direction,plat)
-    send("tilt_"+direction,$platform)
-end
+#def tilt(direction,plat)
+#    send("tilt_"+direction,$platform)
+#end
 
 def tilt_west(plat)
     plat.each do |row|
@@ -49,39 +49,39 @@ def tilt_south(plat)
     return tilt_east(plat_new).transpose
 end
 
+def print_plat(plat)
+    puts plat.map { |row| row.join("") }.join("\n")
+end
 
 $platform = STDIN.read.split("\n").map {|s| s.split("") }
 
-#puts $platform.map { |row| row.join("") }.join("\n")
-#puts "-------------------" 
-#puts (tilt_south($platform)).map { |row| row.join("") }.join("\n")
-#score = tilt_south($platform).map.with_index { |row,index| row.count("O") * ($platform.size - index) }.inject(:+)
 
-cycles = 1000000000 * 4
+cycles = 1000000000 
 i=0
-['north','west','south','east'].cycle do |tilt|
-    #$platform = send(tilt,$platform)
-    $platform = tilt(tilt,$platform)
+j=0
+cycles.times do
+    $platform = tilt_north($platform)
+    $platform = tilt_west($platform)
+    $platform = tilt_south($platform)
+    $platform = tilt_east($platform)
     i += 1
-    if loop_detect(tilt,$platform) then
-        puts "loop detected at #{i}"
-        break
-    end
-    if i > cycles then
+    if (j = loop_detect($platform,i) )> 0 then
+        puts "loop detected between #{j} and  #{i}"
         break
     end
 end
 
-more_cycles = (cycles % i) * 4
+more_cycles = (cycles - i)  % (i - j)
 puts "more cycles: #{more_cycles}"
 i=1
-['north','west','south','east'].cycle do |tilt|
-    $platform = tilt(tilt,$platform)
+more_cycles.times do
+    $platform = tilt_north($platform)
+    $platform = tilt_west($platform)
+    $platform = tilt_south($platform)
+    $platform = tilt_east($platform)
     i += 1
-    if i > more_cycles then
-        break
-    end
 end
+
 
 score = $platform.map.with_index { |row,index| row.count("O") * ($platform.size - index) }.inject(:+)
 puts "score: #{score}"
