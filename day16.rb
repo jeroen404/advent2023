@@ -4,14 +4,11 @@
 
 $debug = false
 
-class Node < Struct.new(:x,:y,:mirror,:beams)
+class Node < Struct.new(:mirror,:beams)
 
     def propagate(beam)
         if beam == nil then
             return
-        end
-        if beam.x != x || beam.y != y then
-            raise "Beam is not at this node"
         end
         if beams.include?(beam) then
             return
@@ -118,7 +115,7 @@ end
 
 $grid = []
 while line = gets do
-    $grid << line.chomp.split('').map.with_index { |x,i| Node.new(i,$grid.length,Mirror.new(x),[]) }
+    $grid << line.chomp.split('').map { |type| Node.new(Mirror.new(type),[]) }
 end
 print_grid if $debug
 
