@@ -122,19 +122,19 @@ print_grid if $debug
 
 max_energy = 0
 for x in 0..$grid[0].length-1 do
-    $grid = reset_grid
+    reset_grid
     $grid[0][x].propagate(Beam.new(x,0,0,1))
     max_energy = [max_energy, score_grid()].max
-    $grid = reset_grid
+    reset_grid
     y=$grid.length-1
     $grid[y][x].propagate(Beam.new(x,y,0,-1))
     max_energy = [max_energy, score_grid()].max
 end
 for y in 0..$grid.length-1 do
-    $grid = reset_grid
+    reset_grid
     $grid[y][0].propagate(Beam.new(0,y,1,0))
     max_energy = [max_energy, score_grid()].max
-    $grid = reset_grid
+    reset_grid
     x=$grid[0].length-1
     $grid[y][x].propagate(Beam.new(x,y,-1,0))
     max_energy = [max_energy, score_grid()].max
