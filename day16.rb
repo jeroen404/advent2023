@@ -7,9 +7,6 @@ $debug = false
 class Node < Struct.new(:mirror,:beams)
 
     def propagate(beam)
-        if beam == nil then
-            return
-        end
         if beams.include?(beam) then
             return
         else 
