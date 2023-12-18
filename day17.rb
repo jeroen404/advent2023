@@ -194,16 +194,12 @@ while not queue.empty? do
         found_node = current_min
         break
     end
-    puts "queue: #{queue.map{|n| [n.x,n.y,dist[[n.x,n.y]]]}}" if $debug
     queue.delete(current_min)
-    puts "current_min: #{current_min.x},#{current_min.y} current_min_val: #{current_min_val} current_min_dir: #{current_min.to_s}" if $debug
     current_min.next_nodes(grid,part).each do |next_node|
-        puts "possible next_node: #{next_node.x},#{next_node.y}"   if $debug
             if dist[next_node.dict_hash_key] == nil or dist[next_node.dict_hash_key] > dist[current_min.dict_hash_key] + next_node.cost(grid) then
                 queue << next_node
                 dist[next_node.dict_hash_key] = dist[current_min.dict_hash_key] + next_node.cost(grid)
                 previous[next_node] = current_min
-                puts "queue next_node: #{next_node.x},#{next_node.y} dist: #{dist[[next_node.x,next_node.y]]}"  if $debug
             end
         #end
     end
@@ -213,20 +209,20 @@ puts dist[found_node.dict_hash_key]
 
 exit
 
-prev = previous[found_node]
-cost = grid[finish_x,finish_y]
-grid[finish_x,finish_y] = 'X'
-grid[0,0] = 'X'
-while not ((prev.x == 0) and (prev.y == 0)) do
-    cost += grid[prev.x,prev.y].to_i
-    grid[prev.x,prev.y] = prev.to_s
-    prev = previous[prev]
-    if prev == nil then
-        puts "prev is nil"
-        break
-    end
-end
-grid.print_grid
+# prev = previous[found_node]
+# cost = grid[finish_x,finish_y]
+# grid[finish_x,finish_y] = 'X'
+# grid[0,0] = 'X'
+# while not ((prev.x == 0) and (prev.y == 0)) do
+#     cost += grid[prev.x,prev.y].to_i
+#     grid[prev.x,prev.y] = prev.to_s
+#     prev = previous[prev]
+#     if prev == nil then
+#         puts "prev is nil"
+#         break
+#     end
+# end
+# grid.print_grid
 
-puts "cost: #{cost}"
+# puts "cost: #{cost}"
 
