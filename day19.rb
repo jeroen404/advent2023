@@ -94,10 +94,6 @@ workflow_lines.each_line do |line|
         elsif ruledef.include? "<" then
             param,value,cond_flow_name = ruledef.match(/(\w+)<(\d+)\:(\w+)/).captures
             rule = RuleLT.new(param,value,cond_flow_name,prev_rule)
-        elsif ruledef == 'A' then
-            rule = RuleAccept.new()
-        elsif ruledef == 'R' then
-            rule = RuleReject.new()
         else
             cond_flow_name = ruledef
             rule = RuleJump.new(cond_flow_name)
